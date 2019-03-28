@@ -36,6 +36,7 @@ $(document).ready(function () {
     toggleBtnVisibility(true);
 
     function startGame() {
+        gifDisplay('start');
         config.chosenNumbers = populateSquares(selectSquaresAtRandom(config.numberOfSquares));
         toggleBtnVisibility(false);
 
@@ -57,21 +58,6 @@ $(document).ready(function () {
             $tar.css("color", "#212529");
             $tar.css("background-color", $tar.css("border-color"));
         }
-
-        // old method
-        // if (tar.classList.contains("btn-diff")) {
-
-
-        //     $(".btn-diff").each(function () {
-        //         var $this = $(this);
-        //         $this.css("color", $this.css("border-color"));
-        //         $this.css("background-color", "transparent");
-        //     })
-
-        //     var $tar = $(tar);
-        //     $tar.css("color", darkTxtColor);
-        //     $tar.css("background-color", $tar.css("border-color"));
-        // }
 
         switch (tar.id) {
 
@@ -122,6 +108,7 @@ $(document).ready(function () {
             else if (config.chosenNumbers.length === 0) {
                 toggleBtnVisibility(true);
                 scoreIncrementer('wins');
+                gifDisplay('win');
             }
         }
     });
@@ -180,12 +167,33 @@ $(document).ready(function () {
             $btnStartGame.hide();
             $("#difficulty-btns").addClass("invisible")
         }
+    }
 
+    function gifDisplay(action) {
+
+        switch (action) {
+            case "win":
+                $(".hide-wrap").hide();
+                $("#win-gif").removeClass('d-none');
+                break;
+            case "lose":
+                $(".hide-wrap").hide();
+                $("#lose-gif").removeClass('d-none');
+                break;
+            case "start":
+                $("#win-gif").addClass('d-none');
+                $("#lose-gif").addClass('d-none');
+                $(".hide-wrap").show();
+                break;
+            default:
+                break;
+        }
     }
 
     function gameOver() {
         hideSquares();
         toggleBtnVisibility(true);
         scoreIncrementer('losses');
+        gifDisplay('lose')
     }
 });

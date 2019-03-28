@@ -28,6 +28,11 @@ body {
   outline: none;
 }
 
+#lose-gif, #win-gif {
+  width: 500px;
+  margin-left: 35%
+}
+
 @media only screen and (max-width: 768px) {
   #game-start {
     height: 75px;
