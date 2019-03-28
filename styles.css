@@ -1,0 +1,35 @@
+body {
+  background: black;
+  color: white;
+}
+
+/* #scoreboard {
+  
+} */
+
+.square {
+  font-size: 85px;
+  font-weight: 1000;
+  font-family: courier;
+  user-select: none;
+}
+
+#game-start {
+  max-height: 150px;
+  cursor: pointer;
+  margin-left: 5%;
+} 
+
+.bg-white {
+  cursor: pointer;
+}
+
+.btn-diff:focus {
+  outline: none;
+}
+
+@media only screen and (max-width: 768px) {
+  #game-start {
+    height: 75px;
+  }
+}
