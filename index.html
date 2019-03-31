@@ -24,21 +24,25 @@
 </head>
 
 <body>
-    <img class="d-none rounded" id="win-gif" src="http://i.imgur.com/wXcjoSB.gif" alt="chimp remember numbers gif">
-    <img class="d-none rounded" id="lose-gif" src="https://media.giphy.com/media/ew1B7rZ9pgh8s/giphy.gif" alt="chimp you lose">
-        
-        <div class="container hide-wrap" id="scoreboard">
-            <p class="text-center">Wins: <span id="wins-counter">0</span></p>
-            <p class="text-center">Losses: <span id="losses">0</span></p>
-            <div id="difficulty-btns" class="text-center">
-                <div class="d-inline-block">
-                    <button type="button" class="btn-diff flex-center btn btn-outline-success" id="easy">Easy</button>
-                    <button type="button" class="btn-diff flex-center btn btn-outline-warning" id="medium">Medium</button>
-                    <button type="button" class="btn-diff flex-center btn btn-outline-danger" id="hard">Hard</button>
-                </div>
+    
+    <div class="container" id="scoreboard">
+        <p class="text-center">Wins: <span id="wins-counter">0</span></p>
+        <p class="text-center">Losses: <span id="losses">0</span></p>
+        <div id="difficulty-btns" class="text-center">
+            <div class="d-inline-block">
+                <button type="button" class="btn-diff btn btn-outline-success" id="easy">Easy</button>
+                <button type="button" class="btn-diff btn btn-outline-warning" id="medium">Medium</button>
+                <button type="button" class="btn-diff btn btn-outline-danger" id="hard">Hard</button>
             </div>
         </div>
-        <div style="height: 100vh">
+    </div>
+    <div class="text-center">
+        <div class="d-inline-block">
+            <img class="d-none rounded mt-5" id="win-gif" src="http://i.imgur.com/wXcjoSB.gif" alt="chimp remember numbers gif">
+            <img class="d-none rounded mt-5" id="lose-gif" src="https://media.giphy.com/media/ew1B7rZ9pgh8s/giphy.gif" alt="chimp you lose">
+        </div>
+    </div>
+    <div style="height: 100vh">
             <div class="hide-wrap">
                 <div class="grid">
                     <div class="row">

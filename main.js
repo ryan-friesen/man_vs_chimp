@@ -1,20 +1,27 @@
 $(document).ready(function () {
 
-    var config = {
-        difficulty: 'easy',
-        numberOfSquares: 4,
-        timeoutSet: 600,
-        chosenNumbers: []
-    };
-
     class Difficulty {
-        constructor(ms, numOfSquares) {
+        constructor(ms, numOfSquares, diffName) {
             this.msSquaresVisible = ms;
             this.numOfSquares = numOfSquares;
+            this.name = diffName;
         }
     }
 
-    var scores = {
+    const easy = new Difficulty(600, 4, 'easy');
+    const medium = new Difficulty(500, 6, 'medium');
+    const hard = new Difficulty(400, 8, 'hard');
+
+    const config = {
+        difficulty: easy,
+        chosenNumbers: []
+    };
+
+    const $currDiff = $("#" + config.difficulty.name);
+    $currDiff.css("color", "#212529");
+    $currDiff.css("background-color", $currDiff.css("border-color"));
+
+    const scores = {
         wins: 0,
         losses: 0
     };
@@ -31,30 +38,31 @@ $(document).ready(function () {
     };
 
 
-    var displayNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    var $btnStartGame = $("#game-start");
+    const displayNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const $btnStartGame = $("#game-start");
+
     toggleBtnVisibility(true);
 
     function startGame() {
         gifDisplay('start');
-        config.chosenNumbers = populateSquares(selectSquaresAtRandom(config.numberOfSquares));
+        config.chosenNumbers = populateSquares(selectSquaresAtRandom(config.difficulty.numOfSquares));
         toggleBtnVisibility(false);
 
     }
 
     $(".btn-diff, #game-start").on("click", function (e) {
 
-        var tar = e.target;
+        const tar = e.target;
 
         if (tar.classList.contains("btn-diff")) {
 
             // remove coloring on previous difficulity
-            var $currDiff = $("#" + config.difficulty);
-            $currDiff.css("color", $currDiff.css("border-color"));
-            $currDiff.css("background-color", "transparent");
+            const $currentDiff = $("#" + config.difficulty.name);
+            $currentDiff.css("color", $currentDiff.css("border-color"));
+            $currentDiff.css("background-color", "transparent");
 
             // add color to new difficulty
-            var $tar = $(tar);
+            const $tar = $(tar);
             $tar.css("color", "#212529");
             $tar.css("background-color", $tar.css("border-color"));
         }
@@ -62,19 +70,13 @@ $(document).ready(function () {
         switch (tar.id) {
 
             case "easy":
-                config.difficulty = 'easy';
-                config.numberOfSquares = 4;
-                config.timeoutSet = 600;
+                config.difficulty = easy;
                 break;
             case "medium":
-                config.difficulty = 'medium';
-                config.numberOfSquares = 6;
-                config.timeoutSet = 500;
+                config.difficulty = medium;
                 break;
             case "hard":
-                config.difficulty = 'hard';
-                config.numberOfSquares = 8;
-                config.timeoutSet = 400;
+                config.difficulty = hard;
                 break;
             case "game-start":
                 hideSquares();
@@ -91,14 +93,14 @@ $(document).ready(function () {
 
     $(".grid").on("click", function (e) {
 
-        var $tar = $(e.target);
+        const $tar = $(e.target);
 
 
         if ($tar.hasClass("bg-white")) {
-            var selectedNum = $tar.html();
+            const selectedNum = $tar.html();
             $tar.html("");
             $tar.removeClass("bg-white");
-            var comparisonNum = config.chosenNumbers.splice(0, 1)[0];
+            const comparisonNum = config.chosenNumbers.splice(0, 1)[0];
 
             if (parseInt(selectedNum) !== comparisonNum) {
                 gameOver();
@@ -113,17 +115,16 @@ $(document).ready(function () {
         }
     });
 
-    // e.g., of fn call: selectSquaresAtRandom(config.numberOfSquares);
     function selectSquaresAtRandom(numOfSquares) {
 
         // select all squares: return type = array with jquery methods available
-        var $squares = $(".square");
+        const $squares = $(".square");
 
-        var selectedSquares = [];
+        const selectedSquares = [];
 
-        for (var i = 0; i < numOfSquares; i++) {
+        for (let i = 0; i < numOfSquares; i++) {
 
-            var randomNum = randomIntFromRange(0, $squares.length);
+            const randomNum = randomIntFromRange(0, $squares.length);
             selectedSquare = $squares.splice(randomNum, 1)[0];
             selectedSquares.push(selectedSquare);
         }
@@ -132,13 +133,13 @@ $(document).ready(function () {
 
     function populateSquares(selectedSquares) {
 
-        var chosenNumbers = [];
-        var displayNumbersCopy = [...displayNumbers];
+        const chosenNumbers = [];
+        const displayNumbersCopy = [...displayNumbers];
 
-        for (var square of selectedSquares) {
+        for (let square of selectedSquares) {
 
-            var randomNum = randomIntFromRange(0, displayNumbersCopy.length);
-            var displayNum = displayNumbersCopy.splice(randomNum, 1)[0];
+            const randomNum = randomIntFromRange(0, displayNumbersCopy.length);
+            const displayNum = displayNumbersCopy.splice(randomNum, 1)[0];
             chosenNumbers.push(displayNum);
             $(square).html(displayNum);
         }
@@ -146,7 +147,7 @@ $(document).ready(function () {
         setTimeout(function () {
 
             $(selectedSquares).addClass("bg-white");
-        }, config.timeoutSet);
+        }, config.difficulty.msSquaresVisible);
 
         chosenNumbers.sort(function (a, b) {
             return a - b;
